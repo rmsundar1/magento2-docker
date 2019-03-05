@@ -8,14 +8,14 @@ services:
         links:
           - php
         volumes:
-          - ./magento:/var/www/magento
+          - ./magento:/var/www/magento:cached
     php:
         container_name: php
         build: ./php
         expose:
           - 9000
         volumes:
-          - ./magento:/var/www/magento
+          - ./magento:/var/www/magento:cached
         depends_on:
           - db
     db:

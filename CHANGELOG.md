@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.3] - 2019-03-05
+### Added
+- Cache for volumes
+
 ## [2.0.2] - 2019-03-05
 ### Added
 - Documentation for Redis configuration
