@@ -1,8 +1,14 @@
 # Changelog
 
+## [2.0.2] - 2019-03-05
+### Added
+- Documentation for Redis configuration
+
+
 ## [2.0.1] - 2019-03-05
 ### Updated
 - Documentation
+
 
 ## [2.0.0] - 2019-03-05
 ### Added
@@ -15,6 +21,7 @@
 ### Updated
 - Documentation
 - Renamed hostname
+
 
 ## [1.0.0] - 2018-08-15
 ### Added
