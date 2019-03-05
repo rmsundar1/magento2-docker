@@ -8,7 +8,7 @@ Using this docker project you can initiate a new project or import the existent 
 1. Download and install docker app
 
 
-## Install a vanilla Magento
+## Install Magento
 1. Import "magento2-docker" repository
 2. Open "magento2-docker" folder in terminal app
 3. Create "magento" folder: 
