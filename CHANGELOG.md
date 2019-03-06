@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.4] - 2019-03-06
+### Added
+- .env file
+
 ## [2.0.3] - 2019-03-05
 ### Added
 - Cache for volumes
@@ -8,11 +12,9 @@
 ### Added
 - Documentation for Redis configuration
 
-
 ## [2.0.1] - 2019-03-05
 ### Updated
 - Documentation
-
 
 ## [2.0.0] - 2019-03-05
 ### Added
@@ -25,7 +27,6 @@
 ### Updated
 - Documentation
 - Renamed hostname
-
 
 ## [1.0.0] - 2018-08-15
 ### Added
