@@ -125,7 +125,7 @@ docker exec -it web
 
 ### Reload php
 ```
-docker docker-compose restart php
+docker-compose restart php
 ```
 
 ## Connect to MySQL from your laptop
