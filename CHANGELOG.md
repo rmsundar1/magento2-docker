@@ -3,10 +3,12 @@
 ## [2.0.5] - 2020-02-06
 ### Added
 - Added SSL configuration to nginx config
-- Replaced mariadb by mysql due to crash issues
 - Added n98-magerun2
 - Added https://github.com/hirak/prestissimo
 - Added msmtp instead of outdated ssmtp 
+
+###  Updated
+- Replaced mariadb by mysql due to crash issues
 
 ## [2.0.4] - 2019-03-06
 ### Added
