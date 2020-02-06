@@ -113,7 +113,7 @@ For connecting to container via SSH you need use the command:
 `docker exec -it <--container_name--> bash`, where <--container_name--> is container name
 
 Example:
-`docker exec -it web`
+`docker exec -it web bash`
 
 ## Reloading services
 
