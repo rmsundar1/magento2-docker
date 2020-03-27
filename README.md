@@ -39,7 +39,7 @@ php bin/magento setup:install \
         --db-name=magento \
         --db-user=magento \
         --db-password=123123q \
-        --base-url=http://magento.local \
+        --base-url=https://magento.local \
         --backend-frontname=admin \
         --admin-user=admin \
         --admin-password=123123q \
