@@ -1,4 +1,4 @@
-# Magento 2 Docker for Developer project
+# Magento 2.4.x Docker for Developer project
 
 Using this docker project you can initiate a new project or import the existent one.
 
@@ -23,7 +23,7 @@ You can easily get any container name via:
 `cd /var/www/magento; ls -la`
 7. Choose your approach below and install the project
 
-7.1 If you want to install a vanilla Magento instance you need to go to https://devdocs.magento.com/guides/v2.3/install-gde/composer.html 
+7.1 If you want to install a vanilla Magento instance you need to go to https://devdocs.magento.com/guides/v2.4/install-gde/composer.html 
 and create a new project to the current directory.
 
 Example:
