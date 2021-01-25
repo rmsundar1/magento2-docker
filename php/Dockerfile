@@ -18,16 +18,15 @@ RUN apt-get -qq install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     mariadb-client \
-    msmtp \
     mailutils \
+    golang-go \
     && docker-php-ext-configure hash --with-mhash \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
     && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv pcntl sockets
 
 # Configure MailHog
-RUN echo 'sendmail_path = "/usr/bin/msmtp -t"' >> /usr/local/etc/php/conf.d/mail.ini \
-    && echo "SMTP = mail" >> /usr/local/etc/php/conf.d/mail.ini \
-    && echo "smtp_port = 1025" >> /usr/local/etc/php/conf.d/mail.ini
+RUN go get github.com/mailhog/mhsendmail
+RUN echo 'sendmail_path="/root/go/bin/mhsendmail --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/mail.ini
 
 # Set memory limit
 RUN echo "memory_limit=4G" >> /usr/local/etc/php/conf.d/memory_limit.ini

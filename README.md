@@ -37,7 +37,7 @@ When prompted, enter your Magento authentication keys.
 8\. Once composer install is done run Magento install command:
 ```shell
 php bin/magento setup:install \
-        --db-host=%DB_CONTAINER_NAME% \
+        --db-host=db \
         --db-name=magento \
         --db-user=magento \
         --db-password=123123q \
@@ -52,7 +52,7 @@ php bin/magento setup:install \
         --currency=USD \
         --timezone=America/Chicago \
         --skip-db-validation \
-        --elasticsearch-host=%ELASTICSEARCH_CONTAINER_NAME% 
+        --elasticsearch-host=elasticsearch 
         --elasticsearch-port=9200
     && chown -R www-data:www-data .
 ```
@@ -64,15 +64,12 @@ php bin/magento setup:install \
 ## Using Redis for session and cache
 Connect to php container vis ssh and run the following commands:
 ```shell
-php bin/magento setup:config:set --session-save=redis --session-save-redis-host="%REDIS_CONTAINER_NAME%" --session-save-redis-port=6379 --session-save-redis-db=1
-php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server="%REDIS_CONTAINER_NAME%" --cache-backend-redis-port=6379 --cache-backend-redis-db=2
+php bin/magento setup:config:set --session-save=redis --session-save-redis-host="redis" --session-save-redis-port=6379 --session-save-redis-db=1
+php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server="redis" --cache-backend-redis-port=6379 --cache-backend-redis-db=2
 ```
 
-For connecting to container via SSH you need use the command:
+For connecting to container via SSH you have to use the command:
 `docker exec -it %CONTAINER_ID% bash`
-
-Example:
-`docker exec -it 15394c02abb1 bash`
 
 ## Reloading services
 
