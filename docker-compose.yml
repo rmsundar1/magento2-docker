@@ -1,7 +1,6 @@
 version: "3"
 services:
     web:
-        container_name: web
         build: ./nginx
         ports:
           - "443:443"
@@ -10,7 +9,6 @@ services:
         volumes:
           - ./magento:/var/www/magento:cached
     php:
-        container_name: php
         build: ./php
         expose:
           - 9000
@@ -19,8 +17,7 @@ services:
         depends_on:
           - db
     db:
-        container_name: db
-        image: mysql:5.7
+        image: mariadb:10.4
         ports:
           - "3306:3306"
         expose:
@@ -31,7 +28,6 @@ services:
             timeout: 20s
             retries: 10
     mailhog:
-        container_name: mail
         image: mailhog/mailhog:latest
         links:
           - php
@@ -39,7 +35,13 @@ services:
           - "1025:1025"
           - "8025:8025"
     redis:
-        container_name: redis
         image: redis:latest
+    elasticsearch:
+      image: elasticsearch:7.6.2
+      ports:
+        - "9200:9200"
+        - "9300:9300"
+      environment:
+        "discovery.type": "single-node"
 volumes:
     magento:

@@ -16,7 +16,9 @@ Using this docker project you can initiate a new project or import the existent 
 4. Build and run all docker components:
 `docker-compose up --build`
 5. After configuration is build and running open a new terminal tab and connect to php container:
-`docker exec -it php bash`
+`docker exec -it %PHP_CONTAINER_ID% bash`
+You can easily get any container name via:
+`docker ps`
 6. Open "magento" folder and verify that the folder is empty:
 `cd /var/www/magento; ls -la`
 7. Choose your approach below and install the project
@@ -33,9 +35,9 @@ Example:
 When prompted, enter your Magento authentication keys.
 
 8\. Once composer install is done run Magento install command:
-```
+```shell
 php bin/magento setup:install \
-        --db-host=db \
+        --db-host=%DB_CONTAINER_NAME% \
         --db-name=magento \
         --db-user=magento \
         --db-password=123123q \
@@ -50,6 +52,8 @@ php bin/magento setup:install \
         --currency=USD \
         --timezone=America/Chicago \
         --skip-db-validation \
+        --elasticsearch-host=%ELASTICSEARCH_CONTAINER_NAME% 
+        --elasticsearch-port=9200
     && chown -R www-data:www-data .
 ```
 
@@ -58,74 +62,28 @@ php bin/magento setup:install \
 10\. Open http://magento.local/
 
 ## Using Redis for session and cache
-Open ./magento/app/etc/env.php and add/update the corresponding data:
-```php
-...
-    'session' => [
-        'save' => 'redis',
-        'redis' => [
-            'host' => 'redis',
-            'port' => '6379',
-            'password' => '',
-            'timeout' => '2.5',
-            'persistent_identifier' => '',
-            'database' => '2',
-            'compression_threshold' => '2048',
-            'compression_library' => 'gzip',
-            'log_level' => '1',
-            'max_concurrency' => '6',
-            'break_after_frontend' => '5',
-            'break_after_adminhtml' => '30',
-            'first_lifetime' => '600',
-            'bot_first_lifetime' => '60',
-            'bot_lifetime' => '7200',
-            'disable_locking' => '0',
-            'min_lifetime' => '60',
-            'max_lifetime' => '2592000'
-        ]
-    ],
-...
-    'cache' => [
-        'frontend' => [
-            'default' => [
-                'backend' => 'Cm_Cache_Backend_Redis',
-                'backend_options' => [
-                    'server' => 'redis',
-                    'database' => '0',
-                    'port' => '6379'
-                ]
-            ]
-        ]
-    ]
-...
-
-``` 
-
-## Connect to containers via SSH
-Docker configuration contains such components as:
-- web (nginx service)
-- php (php-fpm service)
-- db (MySQL service)
-- redis (redis service)
-- mail (mailhog mail service)
+Connect to php container vis ssh and run the following commands:
+```shell
+php bin/magento setup:config:set --session-save=redis --session-save-redis-host="%REDIS_CONTAINER_NAME%" --session-save-redis-port=6379 --session-save-redis-db=1
+php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server="%REDIS_CONTAINER_NAME%" --cache-backend-redis-port=6379 --cache-backend-redis-db=2
+```
 
 For connecting to container via SSH you need use the command:
-`docker exec -it <--container_name--> bash`, where <--container_name--> is container name
+`docker exec -it %CONTAINER_ID% bash`
 
 Example:
-`docker exec -it web bash`
+`docker exec -it 15394c02abb1 bash`
 
 ## Reloading services
 
 ### Reload ngnix
 ```
-docker exec -it web
-/etc/init.d/nginx reload
+docker exec -it %WEB_CONTAINER_ID% /etc/init.d/nginx reload
 ```
 
 ### Reload php
 ```
-docker-compose restart php
+docker-compose restart %PHP_CONTAINER_ID%
 ```
 
 ## Connect to MySQL from your laptop
@@ -141,7 +99,7 @@ You're able to find all the email you send from Magento instance on http://local
 
 Example: 
 
-If you need to change PHP version from 7.2 to 7.1 you need to change `FROM php:7.2-fpm` to `FROM php:7.1-fpm`
+If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:7.4-fpm-buster` to `FROM php:7.3-fpm-buster`
 
 3\. Build and run all docker components:
 `docker-compose up --build`
