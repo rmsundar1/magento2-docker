@@ -1,1 +1,7 @@
-magento/*
+*
+!nginx
+!php
+!.env
+!CHANGELOG.md
+!docker-compose.yml
+!README.md
