@@ -1,6 +1,7 @@
 *
 !nginx
 !php
+!es
 !.env
 !CHANGELOG.md
 !docker-compose.yml
