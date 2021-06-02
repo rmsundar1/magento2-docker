@@ -24,6 +24,9 @@ RUN apt-get -qq install -y \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
     && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv pcntl sockets
 
+# Enable Xdebug
+RUN pecl install xdebug-3.0.3 && docker-php-ext-enable xdebug
+
 # Configure MailHog
 RUN go get github.com/mailhog/mhsendmail
 RUN echo 'sendmail_path="/root/go/bin/mhsendmail --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/mail.ini
