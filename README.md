@@ -109,6 +109,6 @@ If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:7
 3. Build and run all docker components:
 `docker-compose up --build`
 
-Credits:
+### Credits
 - [Igor](https://github.com/isydorenko)
 - [Nithin](https://github.com/nithincninan/)
