@@ -109,6 +109,15 @@ If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:7
 3. Build and run all docker components:
 `docker-compose up --build`
 
+## xDebug
+By default the xdebug is enabled to use the xdebugger 
+1. install xDebug extension in browser.
+2. Enable xDebug in the IDE(phpstorm)
+3. Goto file > settings > PHP > Servers and click on add (+) icon
+   1. Host: magento.local
+   2. port: 443
+   3. absolute path on the server → /var/www/magento
+
 ### Credits
 - [Igor](https://github.com/isydorenko)
 - [Nithin](https://github.com/nithincninan/)
