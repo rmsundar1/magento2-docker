@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:7.1-fpm-buster
 
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/privet && echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/privet && echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/privet
 
@@ -25,7 +25,7 @@ RUN apt-get -qq install -y \
     && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv pcntl sockets
 
 # Enable Xdebug
-RUN pecl install xdebug-3.0.3 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-2.6.1 && docker-php-ext-enable xdebug
 
 # Configure MailHog
 RUN go get github.com/mailhog/mhsendmail && cp /root/go/bin/mhsendmail /usr/local/bin/
