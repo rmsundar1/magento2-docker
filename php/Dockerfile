@@ -25,7 +25,12 @@ RUN apt-get -qq install -y \
     && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv pcntl sockets
 
 # Enable Xdebug
-RUN pecl install xdebug-2.6.1 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-2.9.8 && docker-php-ext-enable xdebug
+RUN echo "xdebug.remote_autostart = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.remote_enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.remote_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.idekey = PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 
 # Configure MailHog
 RUN go get github.com/mailhog/mhsendmail && cp /root/go/bin/mhsendmail /usr/local/bin/
@@ -33,6 +38,13 @@ RUN echo 'sendmail_path="/usr/local/bin/mhsendmail --smtp-addr=mailhog:1025"' >>
 
 # Set memory limit
 RUN echo "memory_limit=4G" >> /usr/local/etc/php/conf.d/memory_limit.ini
+
+#setup blackfire
+RUN apt-get install -y gnupg
+RUN curl -s https://packages.blackfire.io/gpg.key | apt-key add - \
+  && echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list \
+  && apt-get update \
+  && apt-get install blackfire-agent blackfire-php
 
 # Install Composer
 RUN cd /usr/src && curl https://getcomposer.org/download/1.10.19/composer.phar --output composer.phar | php
