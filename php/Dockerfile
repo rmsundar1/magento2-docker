@@ -3,7 +3,6 @@ FROM php:7.4-fpm-buster
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/privet && echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/privet && echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/privet
 
 RUN apt-get update
-
 RUN apt-get -qq install -y \
     apt-utils \
     git \
@@ -26,6 +25,16 @@ RUN apt-get -qq install -y \
 
 # Enable Xdebug
 RUN pecl install xdebug-3.0.3 && docker-php-ext-enable xdebug
+RUN echo "xdebug.mode=develop,debug"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+
+#setup blackfire
+RUN apt-get install -y gnupg
+RUN curl -s https://packages.blackfire.io/gpg.key | apt-key add - \
+  && echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list \
+  && apt-get update \
+  && apt-get install blackfire-agent blackfire-php
 
 # Configure MailHog
 RUN go get github.com/mailhog/mhsendmail && cp /root/go/bin/mhsendmail /usr/local/bin/
