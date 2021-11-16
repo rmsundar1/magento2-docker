@@ -111,13 +111,13 @@ If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:7
 
 ## xDebug Configuration
 By default Xdebug is enabled in the container, Configure Xdebug in PHPSTORM IDE follow below steps
-1. Configure Xdebug in PHPSTORM IDE `Files` > `Settings` > `PHP` > `Servers`
+1. Goto `Files` > `Settings` > `PHP` > `Servers`
 2. Add new server by clicking `+` icon
     * name: magento.local
     * host: magento.local
     * port: 443
 3. Check `Use path mappings`
-    * Absolute path on the server: `/var/www/magento/`
+    * Absolute path on the server → `/var/www/magento/`
 4. Start listening to the PHP Debug connecitons
 
 ## Disable Xdebug
@@ -136,3 +136,7 @@ docker container restart %PHP_CONTAINER_ID%
 2. run with your server ID and Token `blackfire-agent --register --server-id={YOUR_SERVER_ID} --server-token={YOUR_SERVER_TOKEN}`
 3. run `/etc/init.d/blackfire-agent start` to start the agent
 4. Start the profiling from browser with blackfire extension.
+
+### Credits
+- [Igor](https://github.com/isydorenko)
+- [Nithin](https://github.com/nithincninan/)
