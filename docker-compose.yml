@@ -19,7 +19,6 @@ services:
           - db
         environment:
           - PHP_IDE_CONFIG=serverName=magento.local
-          - XDEBUG_CONFIG=idekey=phpstorm
     db:
         image: mariadb:10.4
         ports:

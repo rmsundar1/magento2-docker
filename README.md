@@ -120,6 +120,10 @@ By default Xdebug is enabled in the container, Configure Xdebug in PHPSTORM IDE 
     * Absolute path on the server → `/var/www/magento/`
 4. Start listening to the PHP Debug connecitons
 
+### To debug CLI comments
+1. Add `XDEBUG_CONFIG=idekey=phpstorm` before the comment.
+e.g `XDEBUG_CONFIG=idekey=phpstorm bin/magento cache:flush`
+
 ## Disable Xdebug
 1. connect to php container:
 `docker exec -it %PHP_CONTAINER_ID% bash`
