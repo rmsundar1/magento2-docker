@@ -44,7 +44,7 @@ RUN echo 'sendmail_path="/usr/local/bin/mhsendmail --smtp-addr=mailhog:1025"' >>
 RUN echo "memory_limit=4G" >> /usr/local/etc/php/conf.d/memory_limit.ini
 
 # Install Composer
-RUN cd /usr/src && curl https://getcomposer.org/download/1.10.19/composer.phar --output composer.phar | php
+RUN cd /usr/src && curl https://getcomposer.org/download/2.1.14/composer.phar --output composer.phar | php
 RUN cd /usr/src && mv composer.phar /usr/bin/composer
 RUN chmod +x /usr/bin/composer
 
@@ -52,9 +52,6 @@ RUN chmod +x /usr/bin/composer
 RUN cd /usr/local/bin && curl -sS -O https://files.magerun.net/n98-magerun2-latest.phar
 RUN mv /usr/local/bin/n98-magerun2-latest.phar /usr/local/bin/n98-magerun2.phar
 RUN chmod +x /usr/local/bin/n98-magerun2.phar
-
-# Add https://github.com/hirak/prestissimo support
-RUN composer global require hirak/prestissimo
 
 WORKDIR /var/www/magento
 
