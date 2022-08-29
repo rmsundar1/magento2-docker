@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster
+FROM php:8.1-fpm-buster
 
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/privet && echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/privet && echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/privet
 
@@ -21,10 +21,10 @@ RUN apt-get -qq install -y \
     golang-go \
     && docker-php-ext-configure hash --with-mhash \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath json iconv pcntl sockets
+    && docker-php-ext-install -j$(nproc) intl xsl gd zip pdo_mysql opcache soap bcmath iconv pcntl sockets
 
 # Enable Xdebug
-RUN pecl install xdebug-3.0.3 && docker-php-ext-enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=develop,debug"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
@@ -35,6 +35,17 @@ RUN curl -s https://packages.blackfire.io/gpg.key | apt-key add - \
   && echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list \
   && apt-get update \
   && apt-get install blackfire-agent blackfire-php
+
+# instal source gardian
+RUN PHP_VERSION=$(php -v | head -n1 | cut -d' ' -f2 | cut -d. -f1-2) \
+    && mkdir -p /tmp/sourceguardian \
+    && cd /tmp/sourceguardian \
+    && curl -Os https://www.sourceguardian.com/loaders/download/loaders.linux-x86_64.tar.gz \
+    && tar xzf loaders.linux-x86_64.tar.gz \
+    && cp ixed.${PHP_VERSION}.lin "$(php -i | grep '^extension_dir =' | cut -d' ' -f3)/sourceguardian.so" \
+    && echo "extension=sourceguardian.so" > /usr/local/etc/php/conf.d/15-sourceguardian.ini \
+    && rm -rf /tmp/sourceguardian
+
 
 # Configure MailHog
 RUN go get github.com/mailhog/mhsendmail && cp /root/go/bin/mhsendmail /usr/local/bin/
