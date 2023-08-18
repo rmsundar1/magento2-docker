@@ -28,6 +28,17 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=develop,debug"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
 && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+
+# instal source gardian
+#RUN PHP_VERSION=$(php -v | head -n1 | cut -d' ' -f2 | cut -d. -f1-2) \
+#    && mkdir -p /tmp/sourceguardian \
+#    && cd /tmp/sourceguardian \
+#    && curl -Os https://www.sourceguardian.com/loaders/download/loaders.linux-aarch64.tar.gz \
+#    && tar xzf loaders.aarch64.tar.gz \
+#    && cp ixed.${PHP_VERSION}.lin "$(php -i | grep '^extension_dir =' | cut -d' ' -f3)/sourceguardian.so" \
+#    && echo "extension=sourceguardian.so" > /usr/local/etc/php/conf.d/15-sourceguardian.ini \
+#    && rm -rf /tmp/sourceguardian
+
 # instal source gardian
 COPY ixed.8.1.lin .
 
