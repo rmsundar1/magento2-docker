@@ -17,7 +17,7 @@ Using this docker project you can initiate a new project or import the existent 
    * 4.1 Create "db" folder:  `mkdir db`
    * 4.2 Copy the `.sql` or `.sql.gz` file
 5. Build and run all docker components:
-`docker-compose up --build`
+`docker-compose up --build -d`
 6. After configuration is build and running open a new terminal tab and connect to php container:
 `docker exec -it %PHP_CONTAINER_ID% bash`
 You can easily get any container name via:
@@ -55,8 +55,9 @@ php bin/magento setup:install \
         --currency=USD \
         --timezone=America/Chicago \
         --skip-db-validation \
-        --elasticsearch-host=elasticsearch \
-        --elasticsearch-port=9200 \
+        --search-engine=opensearch \
+        --opensearch-host=opensearch \
+        --opensearch-port=9200 \
         --amqp-host=rabbitmq \
         --amqp-port=5672 \
         --amqp-user=guest \
@@ -97,17 +98,17 @@ You're able to connect to MySQL using "0.0.0.0" as host, port should be default 
 ## Using MailHog for sending emails
 You're able to find all the email you send from Magento instance on http://localhost:8025/
 
-## Switch to PHP 7.x
+## Switch to PHP 8.x
 1. Shutdown your current docker instance
 
 2. Change PHP version in ./php/Docker file to needed version
 
 Example: 
 
-If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:7.4-fpm-buster` to `FROM php:7.3-fpm-buster`
+If you need to change PHP version from 7.4 to 7.3 you need to change `FROM php:8.3-fpm` to `FROM php:8.2-fpm`
 
 3. Build and run all docker components:
-`docker-compose up --build`
+`docker-compose up --build -d`
 
 ## xDebug Configuration
 By default Xdebug is enabled in the container, Configure Xdebug in PHPSTORM IDE follow below steps
@@ -133,13 +134,6 @@ e.g `XDEBUG_CONFIG=idekey=phpstorm bin/magento cache:flush`
 ```
 docker container restart %PHP_CONTAINER_ID%
 ```
-
-## Configure Blackfire
-1. connect to php container:
-`docker exec -it %PHP_CONTAINER_ID% bash`
-2. run with your server ID and Token `blackfire-agent --register --server-id={YOUR_SERVER_ID} --server-token={YOUR_SERVER_TOKEN}`
-3. run `/etc/init.d/blackfire-agent start` to start the agent
-4. Start the profiling from browser with blackfire extension.
 
 ### Credits
 - [Igor](https://github.com/isydorenko)

@@ -20,7 +20,7 @@ services:
         environment:
           - PHP_IDE_CONFIG=serverName=magento.local
     db:
-        image: mariadb:10.4
+        image: mariadb:10.6
         ports:
           - "3306:3306"
         expose:
@@ -43,19 +43,20 @@ services:
     redis:
         image: redis:latest
     rabbitmq:
-        image: rabbitmq:3.8-management-alpine
+        image: rabbitmq:3.12-management-alpine
         ports:
           - "15672:15672"
           - "5672:5672"
         volumes:
           - rabbitmqdata:/var/lib/rabbitmq
-    elasticsearch:
-      build: ./es
+    opensearch:
+      build: ./opensearch
       ports:
         - "9200:9200"
         - "9300:9300"
       environment:
         "discovery.type": "single-node"
+        "DISABLE_SECURITY_PLUGIN": "true"
 volumes:
     magento:
     rabbitmqdata:
