@@ -20,7 +20,7 @@ services:
         environment:
           - PHP_IDE_CONFIG=serverName=magento.local
     db:
-        image: mariadb:10.6
+        image: mariadb:10.4
         ports:
           - "3306:3306"
         expose:
@@ -41,9 +41,9 @@ services:
           - "1025:1025"
           - "8025:8025"
     redis:
-        image: redis:latest
+        image: redis:6.2
     rabbitmq:
-        image: rabbitmq:3.12-management-alpine
+        image: rabbitmq:3.9-management-alpine
         ports:
           - "15672:15672"
           - "5672:5672"

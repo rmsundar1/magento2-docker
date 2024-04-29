@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.1.28-fpm
 
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/privet && echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/privet && echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/privet
 
@@ -37,7 +37,7 @@ RUN echo 'sendmail_path="/usr/local/bin/mhsendmail --smtp-addr=mailhog:1025"' >>
 RUN echo "memory_limit=4G" >> /usr/local/etc/php/conf.d/memory_limit.ini
 
 # Install Composer
-RUN cd /usr/src && curl https://getcomposer.org/download/2.7.2/composer.phar --output composer.phar | php
+RUN cd /usr/src && curl https://getcomposer.org/download/2.2.23/composer.phar --output composer.phar | php
 RUN cd /usr/src && mv composer.phar /usr/bin/composer
 RUN chmod +x /usr/bin/composer
 
