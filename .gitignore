@@ -1,7 +1,7 @@
 *
 !nginx
 !php
-!es
+!opensearch
 !.env
 !CHANGELOG.md
 !docker-compose.yml
